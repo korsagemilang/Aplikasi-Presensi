@@ -1,0 +1,865 @@
+/* --- Variabel Global & Reset --- */
+:root {
+    --primary-color: #3b82f6;
+    --primary-hover: #2563eb;
+    --secondary-color: #6b7280;
+    --danger-color: #ef4444;
+    --danger-hover: #dc2626;
+    --success-color: #10b981;
+    --warning-color: #f59e0b;
+    --light-gray: #f3f4f6;
+    --text-color: #1f2937;
+    --border-color: #d1d5db;
+    --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+    --border-radius: 0.5rem;
+    
+    /* Variabel Clamp untuk ukuran responsif */
+    --font-size-base: clamp(0.875rem, 2vw, 1rem); /* 14px - 16px */
+    --font-size-sm: clamp(0.75rem, 1.8vw, 0.875rem); /* 12px - 14px */
+    --font-size-lg: clamp(1.25rem, 3vw, 1.5rem); /* 20px - 24px */
+    --padding-base: clamp(0.75rem, 2vw, 1.5rem); /* 12px - 24px */
+    --gap-base: clamp(0.5rem, 1.5vw, 1.5rem); /* 8px - 24px */
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--light-gray);
+    color: var(--text-color);
+    line-height: 1.6;
+    
+    /* Perbaikan untuk Sticky Footer */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- Layout Utama & Header --- */
+.main-header {
+    background-color: white;
+    padding: var(--padding-base);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: var(--card-shadow);
+    margin-bottom: var(--padding-base);
+    position: relative;
+    flex-shrink: 0; /* Pastikan header tidak menyusut */
+}
+
+.main-header h1 {
+    font-size: var(--font-size-lg);
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+.main-header nav {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-base);
+}
+
+.main-header nav a {
+    text-decoration: none;
+    color: var(--secondary-color);
+    font-weight: 600;
+    transition: color 0.2s ease;
+    padding: 0.5rem 0;
+    border-bottom: 2px solid transparent;
+}
+
+.main-header nav a:hover,
+.main-header nav a.active {
+    color: var(--primary-color);
+    border-bottom-color: var(--primary-color);
+}
+
+/* User Menu Styles */
+.user-menu {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.user-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background-color: var(--light-gray);
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    font-family: inherit;
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.user-button:hover {
+    background-color: #e5e7eb;
+}
+
+.user-avatar {
+    width: 32px;
+    height: 32px;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 600;
+    font-size: var(--font-size-base);
+}
+
+.user-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 0.5rem;
+    background-color: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-shadow);
+    border: 1px solid var(--border-color);
+    min-width: 200px;
+    z-index: 50;
+    display: none;
+}
+
+.user-dropdown.show {
+    display: block;
+}
+
+.user-dropdown a {
+    display: block;
+    padding: 0.75rem 1rem;
+    color: var(--text-color);
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+    font-size: var(--font-size-base);
+}
+
+.user-dropdown a:hover {
+    background-color: var(--light-gray);
+}
+
+/* Mobile Menu */
+.mobile-menu-button {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    color: var(--secondary-color);
+}
+
+.mobile-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: white;
+    border-top: 1px solid var(--border-color);
+    box-shadow: var(--card-shadow);
+    z-index: 40;
+}
+
+.mobile-menu.show {
+    display: block;
+}
+
+.mobile-menu a {
+    display: block;
+    padding: var(--padding-base);
+    color: var(--secondary-color);
+    text-decoration: none;
+    font-weight: 600;
+    border-bottom: 1px solid var(--border-color);
+    transition: background-color 0.2s ease;
+}
+
+.mobile-menu a:hover,
+.mobile-menu a.active {
+    background-color: var(--light-gray);
+    color: var(--primary-color);
+}
+
+.mobile-menu .user-info {
+    padding: var(--padding-base);
+    border-bottom: 1px solid var(--border-color);
+    background-color: var(--light-gray);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--padding-base);
+    flex-grow: 1; /* Biarkan kontainer mengambil sisa ruang */
+}
+
+/* --- Card & Form --- */
+.card {
+    background-color: white;
+    padding: var(--padding-base);
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-shadow);
+    margin-bottom: var(--padding-base);
+}
+
+.card h2 {
+    font-size: clamp(1rem, 2.5vw, 1.25rem); /* 16px - 20px */
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+/* Class Selection Section */
+.class-selection {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+    color: white;
+    padding: var(--padding-base);
+    border-radius: var(--border-radius);
+    margin-bottom: var(--padding-base);
+    text-align: center;
+}
+
+.class-selection h3 {
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.selection-controls {
+    display: flex;
+    gap: var(--gap-base);
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.selection-controls select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    font-size: var(--font-size-base);
+    margin-bottom: 1rem;
+    font-family: inherit;
+    transition: border-color 0.2s ease;
+}
+
+.selection-controls select:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
+}
+
+/* Date Display */
+.date-display {
+    background-color: var(--light-gray);
+    padding: var(--padding-base);
+    border-radius: var(--border-radius);
+    margin-bottom: var(--padding-base);
+    text-align: center;
+    border-left: 4px solid var(--primary-color);
+}
+
+.date-display .date-label {
+    font-size: var(--font-size-sm);
+    color: var(--secondary-color);
+    margin-bottom: 0.25rem;
+}
+
+.date-display .date-value {
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+/* Stats Grid */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--gap-base);
+    margin-bottom: var(--padding-base);
+}
+
+.stat-card {
+    background-color: white;
+    padding: var(--padding-base);
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-shadow);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.stat-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.stat-icon.blue { background-color: #dbeafe; color: #1d4ed8; }
+.stat-icon.green { background-color: #dcfce7; color: #166534; }
+.stat-icon.yellow { background-color: #fef3c7; color: #d97706; }
+.stat-icon.red { background-color: #fee2e2; color: #dc2626; }
+
+.stat-content h3 {
+    font-size: var(--font-size-sm);
+    color: var(--secondary-color);
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+}
+
+.stat-content p {
+    font-size: clamp(1.5rem, 4vw, 1.875rem); /* 24px - 30px */
+    font-weight: 700;
+    color: var(--text-color);
+}
+
+form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    font-size: var(--font-size-base);
+}
+
+form input[type="text"],
+form input[type="date"],
+form input[type="password"],
+form select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    font-size: var(--font-size-base);
+    margin-bottom: 1rem;
+    font-family: inherit;
+    transition: border-color 0.2s ease;
+}
+
+form input:focus,
+form select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* --- Tombol (Buttons) --- */
+.btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: all 0.2s ease;
+    font-family: inherit;
+    width: auto; /* Default untuk desktop */
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+.btn-primary:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.btn-danger {
+    background-color: var(--danger-color);
+    color: white;
+}
+.btn-danger:hover {
+    background-color: var(--danger-hover);
+    transform: translateY(-1px);
+}
+
+.btn-secondary {
+    background-color: var(--secondary-color);
+    color: white;
+}
+.btn-secondary:hover {
+    background-color: #4b5563;
+    transform: translateY(-1px);
+}
+
+.btn-success {
+    background-color: var(--success-color);
+    color: white;
+}
+
+.btn-success:hover {
+    background-color: #059669;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+/* --- Tabel & Tombol Aksi --- */
+.table-container {
+    overflow-x: auto;
+    margin-top: 1rem;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-color);
+    margin-bottom: 1.5rem;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.data-table th, .data-table td {
+    padding: 0.75rem;
+    text-align: left;
+    border: none;
+}
+
+.data-table thead {
+    background-color: var(--light-gray);
+    font-weight: 600;
+}
+
+.data-table tbody tr:nth-child(even) {
+    background-color: #f9fafb;
+}
+
+.data-table tbody tr:hover {
+    background-color: #f0f4ff;
+}
+
+.data-table .actions {
+    white-space: nowrap;
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-start;
+}
+
+.data-table .actions .btn {
+    padding: 0.5rem 1rem;
+    font-size: var(--font-size-sm);
+}
+
+/* --- Notifikasi/Alert --- */
+.alert {
+    padding: var(--padding-base);
+    margin-bottom: var(--padding-base);
+    border-radius: var(--border-radius);
+    border: 1px solid transparent;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.alert-success {
+    background-color: #dcfce7;
+    color: #166534;
+    border-color: #bbf7d0;
+}
+.alert-error {
+    background-color: #fee2e2;
+    color: #991b1b;
+    border-color: #fecaca;
+}
+.alert-info {
+    background-color: #dbeafe;
+    color: #1e40af;
+    border-color: #bfdbfe;
+}
+
+/* Activity List */
+.activity-list {
+    list-style: none;
+}
+
+.activity-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.activity-item:last-child {
+    border-bottom: none;
+}
+
+.activity-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.activity-dot.green { background-color: #10b981; }
+.activity-dot.yellow { background-color: #f59e0b; }
+.activity-dot.blue { background-color: var(--primary-color); }
+
+.activity-content {
+    flex: 1;
+}
+
+.activity-time {
+    font-size: var(--font-size-sm);
+    color: var(--secondary-color);
+    flex-shrink: 0;
+}
+
+/* Attendance Form */
+.attendance-form {
+    display: none;
+}
+
+.attendance-form.show {
+    display: block;
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Table Styles */
+.attendance-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+}
+
+.attendance-table th {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+    color: white;
+    padding: 1rem 0.75rem;
+    text-align: center;
+    font-weight: 600;
+    font-size: var(--font-size-base);
+    border: none;
+}
+
+.attendance-table td {
+    padding: 1rem 0.75rem;
+    text-align: center;
+    border-bottom: 1px solid var(--border-color);
+    vertical-align: middle;
+}
+
+.attendance-table tbody tr:hover {
+    background-color: #f8fafc;
+}
+
+.attendance-table .student-name {
+    text-align: left;
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+.attendance-table .student-number {
+    font-weight: 600;
+    color: var(--secondary-color);
+}
+
+/* Radio Button Styles */
+.radio-group {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.radio-option {
+    position: relative;
+}
+
+.radio-option input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.radio-option label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: 600;
+    font-size: var(--font-size-sm);
+    border: 2px solid transparent;
+}
+
+/* Status Colors */
+.radio-option.hadir label {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+.radio-option.hadir input:checked + label {
+    background-color: var(--success-color);
+    color: white;
+    border-color: #059669;
+    transform: scale(1.1);
+}
+
+.radio-option.izin label {
+    background-color: #fef3c7;
+    color: #d97706;
+}
+
+.radio-option.izin input:checked + label {
+    background-color: var(--warning-color);
+    color: white;
+    border-color: #d97706;
+    transform: scale(1.1);
+}
+
+.radio-option.sakit label {
+    background-color: #ddd6fe;
+    color: #7c3aed;
+}
+
+.radio-option.sakit input:checked + label {
+    background-color: #7c3aed;
+    color: white;
+    border-color: #6d28d9;
+    transform: scale(1.1);
+}
+
+.radio-option.alpa label {
+    background-color: #fee2e2;
+    color: #dc2626;
+}
+
+.radio-option.alpa input:checked + label {
+    background-color: var(--danger-color);
+    color: white;
+    border-color: #dc2626;
+    transform: scale(1.1);
+}
+
+/* Buttons */
+.form-actions {
+    display: flex;
+    justify-content: center;
+    gap: var(--gap-base);
+    margin-top: 2rem;
+}
+
+/* Summary Stats */
+.attendance-summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: var(--gap-base);
+    margin-bottom: var(--padding-base);
+    padding: var(--padding-base);
+    background-color: var(--light-gray);
+    border-radius: var(--border-radius);
+}
+
+.summary-item {
+    text-align: center;
+    padding: 0.75rem;
+    background-color: white;
+    border-radius: var(--border-radius);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.summary-item .count {
+    font-size: clamp(1.25rem, 3.5vw, 1.5rem);
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+.summary-item .label {
+    font-size: var(--font-size-sm);
+    color: var(--secondary-color);
+    font-weight: 500;
+}
+
+.summary-item.hadir .count { color: var(--success-color); }
+.summary-item.izin .count { color: var(--warning-color); }
+.summary-item.sakit .count { color: #7c3aed; }
+.summary-item.alpa .count { color: var(--danger-color); }
+
+/* Loading State */
+.loading {
+    text-align: center;
+    padding: 2rem;
+    color: var(--secondary-color);
+}
+
+.loading-spinner {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    border: 3px solid var(--border-color);
+    border-top: 3px solid var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 1rem;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .main-header nav {
+        display: none;
+    }
+
+    .mobile-menu-button {
+        display: block;
+    }
+
+    .user-menu {
+        order: -1;
+        margin-right: auto;
+        margin-left: 1rem;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 100%;
+        text-align: center;
+    }
+
+    /* Tabel "stacked" untuk layar kecil */
+    .table-container {
+        border: none;
+    }
+
+    .data-table {
+        min-width: 100%;
+    }
+
+    .data-table thead {
+        display: none; /* Sembunyikan header tabel */
+    }
+
+    .data-table tbody,
+    .data-table tr,
+    .data-table td {
+        display: block; /* Buat elemen tabel jadi block */
+        width: 100%;
+    }
+
+    .data-table tr {
+        margin-bottom: var(--padding-base);
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius);
+        padding: 1rem;
+    }
+
+    .data-table td {
+        text-align: right;
+        padding: 0.5rem 0;
+        border-bottom: none;
+        position: relative;
+    }
+
+    /* Menambahkan label dari data-label attribute */
+    .data-table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 1rem;
+        font-weight: 600;
+        color: var(--text-color);
+    }
+    
+    .data-table tbody tr:hover {
+        background-color: transparent;
+    }
+    
+    .data-table tr:hover {
+        background-color: var(--light-gray);
+    }
+
+    .attendance-table th,
+    .attendance-table td {
+        padding: 0.75rem 0.5rem;
+    }
+
+    .radio-option label {
+        width: 36px;
+        height: 36px;
+        font-size: var(--font-size-sm);
+    }
+
+    /* Tombol aksi dalam tabel di layar kecil */
+    .data-table .actions {
+        justify-content: flex-end;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-header {
+        padding: 0.75rem;
+    }
+    
+    .card {
+        padding: 1rem;
+    }
+
+    .attendance-table th,
+    .attendance-table td {
+        padding: 0.5rem 0.25rem;
+        font-size: 0.8rem;
+    }
+
+    .radio-group {
+        gap: 0.25rem;
+    }
+
+    .radio-option label {
+        width: 32px;
+        height: 32px;
+        font-size: 0.7rem;
+    }
+}
+
+/* Footer */
+.main-footer {
+    background-color: #333; /* Warna latar belakang gelap */
+    color: #fff; /* Warna teks putih */
+    padding: 20px; /* Jarak padding di dalam footer */
+    text-align: center; /* Teks di tengah */
+    font-family: Arial, sans-serif; /* Jenis font yang mudah dibaca */
+    font-size: 14px; /* Ukuran font */
+    border-top: 3px solid #007bff; /* Garis atas dengan warna biru */
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); /* Bayangan di atas footer */
+    flex-shrink: 0; /* Mencegah footer menyusut */
+}
+
+.main-footer p {
+    margin: 0; /* Hapus margin default pada paragraf */
+}
