@@ -24,13 +24,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit; // Tambahkan ini juga
     }
 }
+$stmt = $pdo->query("SELECT pengaturan_value FROM pengaturan WHERE pengaturan_id = 'nama_sekolah'");
+$nama_sekolah = $stmt->fetchColumn() ?: 'Sistem Presensi';
 ?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - SD NEGERI SUKOKERTO 01</title>
+    <title><?= htmlspecialchars($page_title ?? 'Login') ?> - <?= htmlspecialchars($nama_sekolah) ?></title>
+    <link rel="icon" href="logo.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
@@ -63,10 +66,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <div class="login-card w-full max-w-md rounded-2xl shadow-2xl p-8 animate-fade-in relative z-10">
         <div class="text-center mb-8">
-            <div class="w-16 h-16 bg-gradient-to-r from-purple-600 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <img src="logo.png" alt="Logo Sekolah" class="w-10 h-10 object-contain">
+            <div class="w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                <img src="logo.png" alt="Logo Sekolah" style="width: 75px; height: 70px;">
             </div>
-            <h2 class="text-2xl font-bold text-gray-800 mb-2">Login Sistem Informasi Presensi SD NEGERI SUKOKERTO 01</h2>
+            <h2 class="text-2xl font-bold text-gray-800 mb-2">Login </br>Sistem Informasi Presensi </br><?= htmlspecialchars($nama_sekolah) ?></h2>
             <p class="text-gray-600">Silakan masuk untuk melanjutkan</p>
             <?php if (isset($error)): ?>
             <p class="error"><?= htmlspecialchars($error) ?></p>
