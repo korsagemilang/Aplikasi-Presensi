@@ -19,6 +19,7 @@ $nama_sekolah = $stmt->fetchColumn() ?: 'Sistem Presensi';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($page_title ?? 'Dashboard') ?> - <?= htmlspecialchars($nama_sekolah) ?></title>
+    <link rel="icon" href="logo.png">
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
@@ -62,4 +63,5 @@ $nama_sekolah = $stmt->fetchColumn() ?: 'Sistem Presensi';
             <a href="logout.php">Logout</a>
         </div>
     </header>
+
     <main class="container">
